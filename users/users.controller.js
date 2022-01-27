@@ -39,14 +39,12 @@ function getById(req, res, next) {
 
 function getByType(req, res, next) {
     const currentUser = req.user;
-    const type = parseInt(req.body.type);
-
-   
+      
     if ( currentUser.role !== Role.Moderator) {
         return res.status(401).json({ message: 'Unauthorized' });
     }
 
-    userService.getByType(currentUser.role)
+    userService.getByType()
         .then(users => users ? res.json(users) : res.sendStatus(404))
         .catch(err => next(err));
 }

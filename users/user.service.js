@@ -42,7 +42,7 @@ async function getById(id) {
     return userWithoutPassword;
 }
 
-async function getByType(role) {
+async function getByType() {
     const userModerator = users.map(u =>{
 
         if(u.role==Role.Moderator){
