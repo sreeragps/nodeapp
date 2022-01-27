@@ -6,7 +6,7 @@ const Role = require('_helpers/role');
 const users = [
     { id: 1, username: 'admin', password: 'admin', firstName: 'Admin', lastName: 'User', role: Role.Admin },
     { id: 2, username: 'customer', password: 'customer', firstName: 'customer', lastName: 'User', role: Role.Customer },
-    { id: 3, username: 'moderator', password: 'moderator', firstName: 'moderator', lastName: 'User', role: Role.Admin }
+    { id: 3, username: 'moderator', password: 'moderator', firstName: 'moderator', lastName: 'User', role: Role.Moderator }
 ];
 
 module.exports = {
@@ -42,14 +42,15 @@ async function getById(id) {
     return userWithoutPassword;
 }
 
-async function getByType(type) {
+async function getByType(role) {
     const userModerator = users.map(u =>{
 
-        if(u.type==type){
+        if(u.role==Role.Moderator){
             const { password, ...userWithoutPassword } = u;
             return userWithoutPassword;
         }
     } )
-  
+   
+    return userModerator;
    
 }
