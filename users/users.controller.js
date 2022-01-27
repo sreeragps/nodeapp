@@ -7,6 +7,7 @@ const Role = require('_helpers/role');
 // routes
 router.post('/authenticate', authenticate);     // public route
 router.get('/', authorize(Role.Admin), getAll); // admin only
+router.get('/moderator', authorize(), getByType);
 router.get('/:id', authorize(), getById);       // all authenticated users
 module.exports = router;
 
@@ -26,7 +27,7 @@ function getById(req, res, next) {
     const currentUser = req.user;
     const id = parseInt(req.params.id);
 
-    // only allow admins to access other user records
+    
     if (id !== currentUser.sub && currentUser.role !== Role.Admin) {
         return res.status(401).json({ message: 'Unauthorized' });
     }
@@ -40,7 +41,7 @@ function getByType(req, res, next) {
     const currentUser = req.user;
     const type = parseInt(req.body.type);
 
-    // only allow admins to access other user records
+   
     if (type !== currentUser.type && currentUser.role !== Role.Moderator) {
         return res.status(401).json({ message: 'Unauthorized' });
     }
